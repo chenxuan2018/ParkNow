@@ -1,0 +1,41 @@
+click link for prototype videos 
+https://www.youtube.com/watch?v=k7Cv2wTxgbo
+
+package com.example.min.myapplication;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private View v;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    public void onButtonTap1(View v) {
+        Toast myToast = Toast.makeText(getApplicationContext(), "South Garage is full!!", Toast.LENGTH_LONG);
+        myToast.show();
+
+    }
+    public void onButtonTap2(View v) {
+        Toast myToast = Toast.makeText(getApplicationContext(), "North Garage is full!", Toast.LENGTH_LONG);
+        myToast.show();
+
+    }
+    public void onButtonTap3(View v) {
+        Toast myToast = Toast.makeText(getApplicationContext(), "West Garage is full!", Toast.LENGTH_LONG);
+        myToast.show();
+
+    }
+    public void onButtonTap4(View v) {
+        Toast myToast = Toast.makeText(getApplicationContext(), "Park N Ride lot is full!", Toast.LENGTH_LONG);
+        myToast.show();
+
+    }
+}
