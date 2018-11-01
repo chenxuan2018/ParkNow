@@ -9,5 +9,5 @@ This software design document describes the architecture and system design of Pa
 
 ## LINK: 
 ```
-https://sites.google.com/view/cmpe131parknow/north
+https://sites.google.com/view/sjsuparknow/north
 ```
