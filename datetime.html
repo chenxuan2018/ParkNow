@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +10,7 @@ function startTime() {
     m = checkTime(m);
     s = checkTime(s);
 
-    document.getElementById('txt').innerHTML =
-   h + ":" + m + ":" + s;
+    document.getElementById('txt').innerHTML = today.toLocaleDateString() + " " + today.toLocaleTimeString();
     var t = setTimeout(startTime, 500);
 
 }
@@ -22,7 +20,7 @@ function checkTime(i) {
 }
 </script>
 </head>
-<center><font size = 30 color=white><body onload="startTime()">
+<center><font size =6 color=white><body onload="startTime()">
 
 <div id="txt"></div>
 </font>
