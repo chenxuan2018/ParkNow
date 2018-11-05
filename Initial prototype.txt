@@ -1,3 +1,5 @@
+MainActivity.Java file on Android Studio
+API 22 for Galaxy note 3 Lollipop OS
 click link for prototype videos 
 https://www.youtube.com/watch?v=k7Cv2wTxgbo
 
