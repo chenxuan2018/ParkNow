@@ -1,4 +1,4 @@
-//rainbow parking data transfer
+//parking slot data transfer
 var webSocketUrl = "wss://api.artik.cloud/v1.1/websocket?ack=true";
 var device_id = "Your Device ID Here"; // Rainbow parking DEVICE ID
 var device_token = "Your Device Token Here"; //Rainbow parking DEVICE TOKEN
