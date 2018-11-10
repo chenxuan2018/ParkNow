@@ -1,7 +1,7 @@
-//parking slot data transfer
+//rainbow parking data transfer
 var webSocketUrl = "wss://api.artik.cloud/v1.1/websocket?ack=true";
-var device_id = "Your Device ID Here"; // Rainbow parking DEVICE ID
-var device_token = "Your Device Token Here"; //Rainbow parking DEVICE TOKEN
+var device_id = "ae8741ccff634cc984c630cadf43a5e8"; // Rainbow parking DEVICE ID
+var device_token = "2f69b555d900463b80859cf8e6e53ba0"; //Rainbow parking DEVICE TOKEN
 // require websocket module to connect 
 // execute following two commands to your pi's terminal
 // sudo apt-get update
@@ -13,12 +13,12 @@ var ws = null;
 // require serialport module to raspberry pi 
 // execute following command to terminal
 // npm install serialport
-var serialport = require("serialport");
-var SerialPort = serialport.SerialPort;
-var sp = new SerialPort("/dev/ttyACM0", { //for serial communication with arduino 
-    baudrate: 9600,  
+var SerialPort = require("serialport");
+var serialPort = SerialPort.serialPort;
+var sp = new SerialPort("/dev/ttyACM0", { //for serial communication with arduino
+baudRate: 9600,
 // we are using UNO so baudrate is 9600, you might need to change according to your model
-    parser: serialport.parsers.readline("\n")
+parser: new SerialPort.parsers.Readline("\n")
 });
 
 var parking_state=0;// variable to check for parking state_gate
