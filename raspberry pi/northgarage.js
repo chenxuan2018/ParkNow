@@ -1,7 +1,7 @@
-//rainbow parking data transfer
+//north garage parking data transfer
 var webSocketUrl = "wss://api.artik.cloud/v1.1/websocket?ack=true";
-var device_id = "ae8741ccff634cc984c630cadf43a5e8"; // Rainbow parking DEVICE ID
-var device_token = "2f69b555d900463b80859cf8e6e53ba0"; //Rainbow parking DEVICE TOKEN
+var device_id = "ae8741ccff634cc984c630cadf43a5e8"; // north garage  parking DEVICE ID
+var device_token = "2f69b555d900463b80859cf8e6e53ba0"; //north garage  parking DEVICE TOKEN
 // require websocket module to connect 
 // execute following two commands to your pi's terminal
 // sudo apt-get update
