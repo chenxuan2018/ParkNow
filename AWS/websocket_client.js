@@ -4,8 +4,8 @@
 // https: is used for secure HTTP connections.
 // you can get it from Artik cloud documentation page
 var wsUri = "wss://api.artik.cloud/v1.1/websocket?ack=true";
-var device_id = "ae8741ccff634cc984c630cadf43a5e8"; // raspi3 DEVICE ID
-var device_token = "2f69b555d900463b80859cf8e6e53ba0"; //raspi3 DEVICE TOKEN
+var device_id = "ce110d08a34749788dca792c05c72c02"; // raspi3 DEVICE ID
+var device_token = "c130b30ca80f4a268af0daafcc31ba9c"; //raspi3 DEVICE TOKEN
 
 var output;
 var attributes_log;
