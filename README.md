@@ -16,6 +16,15 @@ type (sudo install 'filename.js')
 connect arduino to raspberry pi using USB cable.
 this will communicate through serialport.
 
+Android Studio: Java
+1. Download androidstudio file at https://developer.android.com/studio/.
+2. Install the program, and launch new project or use exisiting project file. 
+3. At MainActivity.xml, copy and paste the code which is located on Android subfolder. 
+4. Click on the Run button, create a virtual emulator (API 21 - API 28) 
+5. User should able to see the output.
+6. This android application is not yet published on android app market, therefore user only can access to this working code on Android Studio.
+
+
 ARTIK Cloud:
 create a Iot Device in artik cloud for Device ID and Token
 raspberry pi will send data to artik cloud 
