@@ -35,5 +35,5 @@ html and javascript will publish a static website on AWS.
 returning live status of data from artik cloud.
 ## LINK: 
 ```
-https://sites.google.com/view/sjsuparknow/north
+http://www.sjsuparknow.com.s3-website-us-west-1.amazonaws.com
 ```
