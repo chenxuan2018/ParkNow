@@ -1,8 +1,8 @@
-//north garage parking data transfer
+//staff parking data transfer
 var webSocketUrl = "wss://api.artik.cloud/v1.1/websocket?ack=true";
 var device_id = "ce110d08a34749788dca792c05c72c02"; // north garage  parking DEVICE ID
 var device_token = "c130b30ca80f4a268af0daafcc31ba9c"; //north garage  parking DEVICE TOKEN
-// require websocket module to connect 
+// require websocket module to connect
 // execute following two commands to your pi's terminal
 // sudo apt-get update
 // npm install websocket
@@ -10,7 +10,7 @@ var WebSocket = require('ws');
 var isWebSocketReady = false;
 var data="";
 var ws = null;
-// require serialport module to raspberry pi 
+// require serialport module to raspberry pi
 // execute following command to terminal
 // npm install serialport
 var SerialPort = require("serialport");
@@ -37,21 +37,21 @@ function start() {
     //Create the WebSocket connection
     isWebSocketReady = false;
     ws = new WebSocket(webSocketUrl);
-	// this function invoked on successful connection
+    // this function invoked on successful connection
     ws.on('open', function() {
-        console.log("WebSocket connection is open ....");
-		// you must register for successful data transmission
-		// registration is for authentication or secure data transfer
-        register();
-    });
+          console.log("WebSocket connection is open ....");
+          // you must register for successful data transmission
+          // registration is for authentication or secure data transfer
+          register();
+          });
     ws.on('message', function(data) {
-      //this loop is called whenever the client sends some message
-         handleRcvMsg(data); //data is send to the function handleRcvMsg()
-    });
+          //this loop is called whenever the client sends some message
+          handleRcvMsg(data); //data is send to the function handleRcvMsg()
+          });
     ws.on('close', function() {
-        console.log("WebSocket connection is closed ....");
-
-    });      
+          console.log("WebSocket connection is closed ....");
+          
+          });
     
 }
 
@@ -69,7 +69,7 @@ function register(){
     }
     catch (e) {
         console.error('Failed to register messages. Error in registering message: ' + e.toString());
-    }    
+    }
 }
 
 
@@ -77,26 +77,27 @@ function register(){
 // in our case this function will not be used as we will not receive any action
 // in raspberry pi. This is for future modification.
 function handleRcvMsg(msg){
-	// you have to parse the received string
+    // you have to parse the received string
     var msgObj = JSON.parse(msg);
     if (msgObj.type != "action") return; //Early return;
-
+    
     var actions = msgObj.data.actions;
-    var actionName = actions[0].name; 
+    var actionName = actions[0].name;
     console.log("The received action is " + actionName);
-  
+    
     //you must know your registered actions in order to perform accordinlgy
-    if (actionName.toLowerCase() == "parking_state") 
-    { 
+    if (actionName.toLowerCase() == "settext")
+    {
         // do something here after receiving 'parking_state'
+        console.log('receving recognized action' + actionName);
     }
     else {
-         //this loop executes if some unregistered action is received
-         //so you must register every action in cloud
+        //this loop executes if some unregistered action is received
+        //so you must register every action in cloud
         console.log('Do nothing since receiving unrecognized action ' + actionName);
         return;
     }
-   
+    
 }
 
 
@@ -106,28 +107,28 @@ function handleRcvMsg(msg){
  */
 //This function is responsible for sending commands to cloud
 //function sendStateToArtikCloud(parking) sends number of free parking slot to artik cloud
-function sendStateToArtikCloud(parking){
+function sendStateToArtikCloud(parking_slot){
     try{
         ts = ', "ts": '+getTimeMillis();
         var data = {
-            "rainbowlot": parking
+            "parking_slot": parking_slot
             //setting the parking value from argument to our cloud variable "parking_value"
-
-            };
+            
+        };
         var payload = '{"sdid":"'+device_id+'"'+ts+', "data": '+JSON.stringify(data)+', "cid":"'+getTimeMillis()+'"}';
         console.log('Sending payload ' + payload + '\n');
         ws.send(payload, {mask: true});
     } catch (e) {
         console.error('Error in sending a message: ' + e.toString() +'\n');
-    }    
+    }
 }
 
 
 
 function exitClosePins() {
     
-        console.log('Exit and destroy all pins!');
-        process.exit();
+    console.log('Exit and destroy all pins!');
+    process.exit();
     
 }
 
@@ -135,12 +136,13 @@ function exitClosePins() {
 start();
 //exectes every time when data is received from arduino (30 sec programmed delay from arduino)
 sp.on("open", function () {
-    sp.on('data', function(data) {
+      sp.on('data', function(data) {
             console.log("Serial port received data:" + data);
             //sendStateToArtikCloud(data);//free parking slot
-            sendStateToArtikCloud(data);
-           
-    });
-});
+            var parking_slot = parseInt(data);
+            sendStateToArtikCloud(parking_slot);
+            
+            });
+      });
 
 process.on('SIGINT', exitClosePins);
