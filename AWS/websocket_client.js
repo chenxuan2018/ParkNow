@@ -1,61 +1,60 @@
 // real-time interactions are possible using websocket
-// Notice the ws:. This is the new URL schema for WebSocket connections. 
-// There is also wss: for secure WebSocket connection the same way 
+// Notice the ws:. This is the new URL schema for WebSocket connections.
+// There is also wss: for secure WebSocket connection the same way
 // https: is used for secure HTTP connections.
 // you can get it from Artik cloud documentation page
 var wsUri = "wss://api.artik.cloud/v1.1/websocket?ack=true";
-var device_id = "ce110d08a34749788dca792c05c72c02"; // raspi3 DEVICE ID
-var device_token = "c130b30ca80f4a268af0daafcc31ba9c"; //raspi3 DEVICE TOKEN
-
+var device_id = "ce110d08a34749788dca792c05c72c02"; // north garage  parking DEVICE ID
+var device_token = "c130b30ca80f4a268af0daafcc31ba9c"; //north garage  parking DEVICE TOKEN
 var output;
 var attributes_log;
 var websocket;
 
 function init() {
-	// document.getElementById() write something to html page
+    // document.getElementById() write something to html page
     output = document.getElementById("output");
     attributes_log = document.getElementById("attributes_log");
     if (browserSupportsWebSockets() === false) {
-		// check browser support websocket protocol or not
+        // check browser support websocket protocol or not
         writeToScreen("Sorry! your web browser does not support WebSockets. Try using Google Chrome or Firefox Latest Versions");
-
+        
         var element = document.getElementById("websocketelements");
         element.parentNode.removeChild(element);
-
+        
         return; //
     }
     //You open up a WebSocket connection simply by calling the WebSocket constructor
     websocket = new WebSocket(wsUri);
     //When the connection is open, function invoked automatically
-    websocket.onopen = function() {		
+    websocket.onopen = function() {
         //writeAttributeValues('onOpen Event Fired');
         writeToScreen("Successfully connected to Parking System");
-		// after connection is open, registration is required for secure data transmission
-		register();
+        // after connection is open, registration is required for secure data transmission
+        register();
     };
     // invoked when new message received
     websocket.onmessage = function(evt) {
         onMessage(evt);
     };
     // when received error
-	// You can handle any errors that occur by listening out for the error event.
+    // You can handle any errors that occur by listening out for the error event.
     websocket.onerror = function(evt) {
         onError(evt);
     };
 }
 
 function onClose(evt) {
-	// Once youre done with your WebSocket you can terminate the connection using the close() method.
+    // Once youre done with your WebSocket you can terminate the connection using the close() method.
     websocket.close();
     //writeAttributeValues('onClose Event Fired');
     writeToScreen("DISCONNECTED");
 }
 
-// When a message is received the message event is fired. 
+// When a message is received the message event is fired.
 function onMessage(evt) {
     writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
     //writeAttributeValues('onMessage Event Fired');
-	handleRcvMsg(evt.data); //data is send to the function handleRcvMsg()
+    handleRcvMsg(evt.data); //data is send to the function handleRcvMsg()
 }
 
 function onError(evt) {
@@ -64,7 +63,7 @@ function onError(evt) {
 }
 
 function doSend(message) {
-	// To send a message through the WebSocket connection you call the send() method on your WebSocket instance
+    // To send a message through the WebSocket connection you call the send() method on your WebSocket instance
     websocket.send(message);
     //writeAttributeValues('onSend Event Fired');
     writeToScreen("SENT: " + message);
@@ -114,28 +113,28 @@ function register(){
         writeToScreen('Sending register message ' + registerMessage + '\n');
         websocket.send(registerMessage, {mask: true});
         isWebSocketReady = true;
-		//document.getElementById("rainbow").innerHTML = "";
-		//document.getElementById("rainbow").innerHTML = "Capacity:"+'<span style="color: red;">50</span> '+"Free Slot:"+'<span style="color: red;"></span>'+"50";
+        //document.getElementById("rainbow").innerHTML = "";
+        //document.getElementById("rainbow").innerHTML = "Capacity:"+'<span style="color: red;">50</span> '+"Free Slot:"+'<span style="color: red;"></span>'+"50";
         //document.getElementById("indigo").innerHTML = "Capacity: 60,  Free Slot: 5";
-	}
+    }
     catch (e) {
         writeToScreen('Failed to register messages. Error in registering message: ' + e.toString());
-    }    
+    }
 }
 
 //data after receiving is sent here for processing
 function handleRcvMsg(msg){
-	// message is received as following string
-	// {"actions":[{"name":"setText","parameters":{"text":"4", "text2": "5"}}]}
-	// you have to parse it
+    // message is received as following string
+    //{"actions":[{"name":"setText","parameters":{"text":"", "text2": ""}}]}
+    // you have to parse it
     var msgObj = JSON.parse(msg);
     if (msgObj.type != "action") return; //Early return;
-
+    
     var actions = msgObj.data.actions;
-    var northData = actions[0].parameters.text;
-	var southData = actions[0].parameters.text2;
-    console.log("The received action is " + actions);  
-	document.getElementById("North").innerHTML = "Capacity: 50,  Free Slot: "+northData;
-	document.getElementById("South").innerHTML = "Capacity: 60,  Free Slot: "+southData;
-   
+    var rainbowData = actions[0].parameters.text;
+    var indigoData = actions[0].parameters.text2;
+    console.log("The received action is " + actions);
+    document.getElementById("rainbow").innerHTML = rainbowData + " Slot Available";
+    document.getElementById("indigo").innerHTML = indigoData + " Slot Available";
+    
 }
