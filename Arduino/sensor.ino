@@ -70,6 +70,6 @@ void loop() {
  freeSlot = 3 - count;
 
  // number of total slot is sent to raspberry pi using usb
-Serial.print(freeSlot);
+Serial.println(freeSlot);
 delay(3000);
 }
